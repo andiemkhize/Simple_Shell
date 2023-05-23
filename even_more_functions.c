@@ -11,16 +11,16 @@
  */
 int _strlen(char *str)
 {
-        int i;
+	int i;
 
-        i = 0;
+	i = 0;
 
-        while (str[i] != '\0')
-        {
-                i++;
-        }
+	while (str[i] != '\0')
+	{
+		i++;
+	}
 
-        return (i);
+	return (i);
 }
 
 /**
@@ -31,13 +31,13 @@ int _strlen(char *str)
  */
 int _strcmp(char *s1, char *s2)
 {
-        int i;
+	int i;
 
-        i = 0;
+	i = 0;
 
-        while (s1[i] && s1[i] == s2[i])
-        {
-                i++;
-        }
-        return (s1[i] - s2[i]);
+	while (s1[i] && s1[i] == s2[i])
+	{
+		i++;
+	}
+	return (s1[i] - s2[i]);
 }

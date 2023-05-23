@@ -6,29 +6,34 @@
 
 /**
  * print_env - Function prints out each environment variable
+ * @env: Environment
  */
-void print_env(void)
+void print_env(char **env)
 {
-        extern char **environ;
-        char **env = environ;
-        size_t i, len;
-        ssize_t char_written;
+	size_t len;
+	ssize_t char_written;
 
-        i = 0;
+	if (env == NULL)
+	{
+		perror("$ Invalid environment");
+		exit(EXIT_FAILURE);
+	}
 
-        while (env[i])
-        {
-                len = strlen(env[i]);
-                char_written = write(STDOUT_FILENO, env[i], len);
-                write(STDOUT_FILENO, "\n", 1);
+	printf("%s\n", *env);
 
-                if (char_written == -1)
-                {
-                        perror("$ Write error");
-                        exit(EXIT_FAILURE);
-                }
-                i++;
-        }
+	while (*env != NULL)
+	{
+		len = _strlen(*env);
+		char_written = write(STDOUT_FILENO, *env, len);
+		write(STDOUT_FILENO, "\n", 1);
+
+		if (char_written == -1)
+		{
+			perror("$ Env write error");
+			exit(EXIT_FAILURE);
+		}
+		env++;
+	}
 }
 
 /**
@@ -41,43 +46,41 @@ void print_env(void)
  */
 int _strncmp(const char *s1, const char *s2, int n)
 {
-        int i, j;
+	int i, j;
 
-        i = 0;
-        j = 0;
+	i = 0;
+	j = 0;
 
-        while (i < n)
-        {
-                if (s1[j] && s1[j] == s2[j])
-                {
-                        j++;
-                }
-                i++;
-        }
+	while (i < n)
+	{
+		if (s1[j] && s1[j] == s2[j])
+		{
+			j++;
+		}
+		i++;
+	}
 
-        return (i - j);
+	return (i - j);
 }
 
 /**
  * getpath - Function returns the PATH variable
+ * @env: Environment
  *
  * Return: env
  */
-char *getpath(void)
+char *getpath(char **env)
 {
-        extern char **environ;
-        char **env = environ;
+	while (*env != NULL)
+	{
+		if (_strncmp(*env, "PATH=", 5) == 0)
+		{
+			return (*env + 5);
+		}
+		env++;
+	}
 
-        while (*env != NULL)
-        {
-                if (_strncmp(*env, "PATH=", 5) == 0)
-                {
-                        return (*env + 5);
-                }
-                env++;
-        }
-
-        return (NULL);
+	return (NULL);
 }
 
 /**
@@ -88,26 +91,26 @@ char *getpath(void)
  */
 char *_strcat(char *dest, char *src)
 {
-        int len1, len2;
+	int len1, len2;
 
-        len1 = 0;
-        len2 = 0;
+	len1 = 0;
+	len2 = 0;
 
-        while (dest[len1] != '\0')
-        {
-                len1++;
-        }
+	while (dest[len1] != '\0')
+	{
+		len1++;
+	}
 
-        while (src[len2] != '\0')
-        {
-                dest[len1] = src[len2];
-                len1++;
-                len2++;
-        }
+	while (src[len2] != '\0')
+	{
+		dest[len1] = src[len2];
+		len1++;
+		len2++;
+	}
 
-        dest[len1] = '\0';
+	dest[len1] = '\0';
 
-        return (dest);
+	return (dest);
 }
 
 /**
@@ -118,13 +121,13 @@ char *_strcat(char *dest, char *src)
  */
 char *_strcpy(char *dest, const char *src)
 {
-        int i;
+	int i;
 
-        for (i = 0; src[i] != '\0'; i++)
-        {
-                dest[i] = src[i];
-        }
-        dest[i] = '\0';
+	for (i = 0; src[i] != '\0'; i++)
+	{
+		dest[i] = src[i];
+	}
+	dest[i] = '\0';
 
-        return (dest);
+	return (dest);
 }
