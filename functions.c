@@ -21,7 +21,6 @@ char *read_input(void)
 	{
 		if (feof(stdin))
 		{
-			write(STDOUT_FILENO, "exit\n", 5);
 			exit(EXIT_SUCCESS);
 		}
 		else if (ferror(stdin))
