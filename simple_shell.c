@@ -11,8 +11,8 @@
 int main(int argc, char **argv, char **env)
 {
 	builtin command_action[] = {
-	    {"exit\n", exit_shell},
-	    {"env\n", print_env},
+	    {"exit\n", exit_builtin},
+	    {"env\n", printenv_builtin},
 	};
 
 	char *user_input, **parsed_input, *command;
@@ -22,6 +22,11 @@ int main(int argc, char **argv, char **env)
 
 	while (true)
 	{
+		if (isatty(STDIN_FILENO))
+		{
+			print_prompt();
+		}
+
 		user_input = read_input();
 
 		if (user_input == NULL)

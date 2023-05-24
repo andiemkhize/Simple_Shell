@@ -41,3 +41,11 @@ int _strcmp(char *s1, char *s2)
 	}
 	return (s1[i] - s2[i]);
 }
+
+/**
+ * print_prompt - Function prints the symbol indicating the prompt
+ */
+void print_prompt(void)
+{
+		write(STDOUT_FILENO, ANSI_COLOR_GREEN "$ " ANSI_COLOR_RESET, 12);
+}

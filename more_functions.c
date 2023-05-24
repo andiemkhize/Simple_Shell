@@ -8,7 +8,7 @@
  * print_env - Function prints out each environment variable
  * @env: Environment
  */
-void print_env(char **env)
+void printenv_builtin(char **env)
 {
 	size_t len;
 	ssize_t char_written;

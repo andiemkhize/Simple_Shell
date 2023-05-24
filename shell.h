@@ -25,14 +25,15 @@ typedef struct builtins
 } builtin;
 
 /* Simple Shell core functions */
+void print_prompt(void);
 char *read_input(void);
 char **parse_input(char *str, char **argv, int argc);
 char *find_path(char *parsed_input, char **env);
 void execute_command(char **argv, char *command);
 
 /* Builtin functions */
-void exit_shell(char **env);
-void print_env(char **env);
+void exit_builtin(char **env);
+void printenv_builtin(char **env);
 
 /* Helper functions */
 char *getpath(char **env);

@@ -15,8 +15,6 @@ char *read_input(void)
 	size_t len = 0;
 	ssize_t char_read;
 
-	write(STDOUT_FILENO, ANSI_COLOR_GREEN "$ " ANSI_COLOR_RESET, 12);
-
 	char_read = getline(&input, &len, stdin);
 
 	if (char_read == -1)
@@ -201,7 +199,7 @@ void execute_command(char **argv, char *command)
  * exit_shell - Function exits the shell
  * @env: Environment
  */
-void exit_shell(char **env)
+void exit_builtin(char **env)
 {
 	(void)**env;
 
