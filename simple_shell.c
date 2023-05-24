@@ -14,7 +14,6 @@ int main(int argc, char **argv, char **env)
 	    {"exit\n", exit_builtin},
 	    {"env\n", printenv_builtin},
 	};
-
 	char *user_input, **parsed_input, *command;
 	int num_builtins, i;
 
@@ -28,7 +27,6 @@ int main(int argc, char **argv, char **env)
 		}
 
 		user_input = read_input();
-
 		if (user_input == NULL)
 		{
 			continue;
@@ -51,6 +49,5 @@ int main(int argc, char **argv, char **env)
 		free(parsed_input);
 		free(command);
 	}
-
 	return (0);
 }

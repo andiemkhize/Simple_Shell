@@ -196,7 +196,7 @@ void execute_command(char **argv, char *command)
 }
 
 /**
- * exit_shell - Function exits the shell
+ * exit_builtin - Function exits the shell
  * @env: Environment
  */
 void exit_builtin(char **env)

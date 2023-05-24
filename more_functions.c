@@ -5,7 +5,7 @@
  */
 
 /**
- * print_env - Function prints out each environment variable
+ * printenv_builtin - Function prints out each environment variable
  * @env: Environment
  */
 void printenv_builtin(char **env)
