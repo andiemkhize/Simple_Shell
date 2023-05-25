@@ -2,6 +2,8 @@
 #define SHELL_H
 #define ANSI_COLOR_GREEN   "\x1b[32m"
 #define ANSI_COLOR_RESET   "\x1b[0m"
+#define TOKEN_DELIM " :\n\t"
+#define MAX_TOKENS 64
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -27,20 +29,12 @@ typedef struct builtins
 /* Simple Shell core functions */
 void print_prompt(void);
 char *read_input(void);
-char **parse_input(char *str, char **argv, int argc);
-char *find_path(char *parsed_input, char **env);
-void execute_command(char **argv, char *command);
+char **parse_input(char *user_input, char **argv, int argc);
+char *find_path(char *parsed_input);
+void execute_command(char **argv, char *command, char **env);
 
 /* Builtin functions */
 void exit_builtin(char **env);
 void printenv_builtin(char **env);
-
-/* Helper functions */
-char *getpath(char **env);
-int _strncmp(const char *s1, const char *s2, int n);
-char *_strcat(char *dest, char *src);
-char *_strcpy(char *dest, const char *src);
-int _strlen(char *str);
-int _strcmp(char *s1, char *s2);
 
 #endif

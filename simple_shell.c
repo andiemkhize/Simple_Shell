@@ -34,7 +34,7 @@ int main(int argc, char **argv, char **env)
 
 		for (i = 0; i < num_builtins; i++)
 		{
-			if (_strcmp(user_input, command_action[i].name) == 0)
+			if (strcmp(user_input, command_action[i].name) == 0)
 			{
 				command_action[i].function(env);
 				break;
@@ -42,8 +42,8 @@ int main(int argc, char **argv, char **env)
 		}
 
 		parsed_input = parse_input(user_input, argv, argc);
-		command = find_path(*parsed_input, env);
-		execute_command(parsed_input, command);
+		command = find_path(*parsed_input);
+		execute_command(parsed_input, command, env);
 
 		free(user_input);
 		free(parsed_input);
