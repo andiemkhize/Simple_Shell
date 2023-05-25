@@ -1,53 +1,98 @@
 #include "shell.h"
 
 /**
+ * tokenize_input - Function tokenizes the input from the user
+ * @input: Input received from the user
+ * Return: tokens
+ */
+char **tokenize_input(char *input)
+{
+	int i = 0;
+	char **tokens = malloc(MAX_TOKENS * sizeof(char *));
+	char *token = strtok(input, TOKEN_DELIM);
+
+	while (token != NULL)
+	{
+		tokens[i] = strdup(token);
+		i++;
+		token = strtok(NULL, TOKEN_DELIM);
+	}
+	tokens[i] = NULL;
+	return (tokens);
+}
+
+/**
+ * free_tokens - Function frees tokens stored in tokens
+ * @tokens: Array of tokens
+ */
+void free_tokens(char **tokens)
+{
+	int i;
+
+	if (tokens == NULL)
+	{
+		return;
+	}
+
+	for (i = 0; tokens[i] != NULL; i++)
+	{
+		free(tokens[i]);
+		tokens[i] = NULL;
+	}
+	free(tokens);
+}
+
+/**
  * main - Entry point
+ *
  * @argc: Argument count
  * @argv: Argument vector
- * @env: Environment
+ * @env: Environment varibles
  *
  * Return: 0 (Sucess)
  */
 int main(int argc, char **argv, char **env)
 {
-	builtin command_action[] = {
-	    {"exit\n", exit_builtin},
-	    {"env\n", printenv_builtin},
-	};
-	char *user_input, **parsed_input, *command;
-	int num_builtins, i;
+	char *input = NULL;
+	size_t input_size = 0;
+	char **tokens;
+	(void)argc;
+	(void)argv;
 
-	num_builtins = sizeof(command_action) / sizeof(builtin);
-
-	while (true)
+	while (1)
 	{
 		if (isatty(STDIN_FILENO))
 		{
-			print_prompt();
+			printf("$ ");
+			fflush(stdout);
 		}
 
-		user_input = read_input();
-		if (user_input == NULL)
+		if (getline(&input, &input_size, stdin) == -1)
 		{
+			printf("\n");
+			break;
+		}
+
+		tokens = tokenize_input(input);
+
+		if (tokens[0] == NULL)
+		{
+			free_tokens(tokens);
 			continue;
 		}
 
-		for (i = 0; i < num_builtins; i++)
+		if (strcmp(tokens[0], "exit") == 0)
 		{
-			if (strcmp(user_input, command_action[i].name) == 0)
-			{
-				command_action[i].function(env);
-				break;
-			}
+			free(input);
+			exit(EXIT_SUCCESS);
 		}
 
-		parsed_input = parse_input(user_input, argv, argc);
-		command = find_path(*parsed_input);
-		execute_command(parsed_input, command, env);
+		execute_command(tokens, env);
 
-		free(user_input);
-		free(parsed_input);
-		free(command);
+		free_tokens(tokens);
 	}
+
+	free(input);
+
 	return (0);
 }
