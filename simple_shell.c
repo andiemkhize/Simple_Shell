@@ -74,7 +74,6 @@ int main(int argc, char **argv, char **env)
 		}
 
 		tokens = tokenize_input(input);
-
 		if (tokens[0] == NULL)
 		{
 			free_tokens(tokens);
@@ -88,10 +87,8 @@ int main(int argc, char **argv, char **env)
 		}
 
 		execute_command(tokens, env);
-
 		free_tokens(tokens);
 	}
-
 	free(input);
 
 	return (0);
