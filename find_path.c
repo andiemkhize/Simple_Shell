@@ -4,7 +4,6 @@
  * find_path - Function finds the PATH for a given command
  *
  * @parsed_input: Return value from parse_input
- * @env: Environment
  *
  * Return: command_path || NULL
  */
