@@ -67,17 +67,6 @@ void execute_command(char **tokens, char **env)
 
 	if (fork_result == 0)
 	{
-		if (strcmp(tokens[0], "env") == 0)
-		{
-			while (*env != NULL)
-			{
-				printf("%s\n", *env);
-				env++;
-			}
-			free_tokens(tokens);
-			exit(EXIT_SUCCESS);
-		}
-
 		find_command_execute(tokens, env);
 		free_tokens(tokens);
 		exit(EXIT_SUCCESS);
