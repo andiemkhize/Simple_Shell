@@ -80,3 +80,24 @@ void execute_command(char **tokens, char **env)
 		waitpid(fork_result, &status, 0);
 	}
 }
+
+/**
+ * handle_exit - function handles the exit builtin
+ * @tokens: Array of tokens
+ */
+void handle_exit(char **tokens)
+{
+	int exit_status;
+
+	if (tokens[1] != NULL)
+	{
+		exit_status = atoi(tokens[1]);
+		free_tokens(tokens);
+		exit(exit_status);
+	}
+	else
+	{
+		free_tokens(tokens);
+		exit(EXIT_SUCCESS);
+	}
+}

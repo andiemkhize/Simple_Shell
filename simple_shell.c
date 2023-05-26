@@ -1,6 +1,35 @@
 #include "shell.h"
 
 /**
+ * print_prompt - Function prints the prompt
+ */
+void print_prompt(void)
+{
+	if (isatty(STDIN_FILENO))
+	{
+		printf("$ ");
+		fflush(stdout);
+	}
+}
+
+/**
+ * read_input - Function read input from user
+ * Return: input
+ */
+char *read_input(void)
+{
+	char *input = NULL;
+	size_t input_size = 0;
+
+	if (getline(&input, &input_size, stdin) == -1)
+	{
+		free(input);
+		return (NULL);
+	}
+
+	return (input);
+}
+/**
  * tokenize_input - Function tokenizes the input from the user
  * @input: Input received from the user
  * Return: tokens
@@ -53,21 +82,17 @@ void free_tokens(char **tokens)
  */
 int main(int argc, char **argv, char **env)
 {
-	char *input = NULL;
-	size_t input_size = 0;
+	char *input;
 	char **tokens;
 	(void)argc;
 	(void)argv;
 
 	while (1)
 	{
-		if (isatty(STDIN_FILENO))
-		{
-			printf("$ ");
-			fflush(stdout);
-		}
+		print_prompt();
 
-		if (getline(&input, &input_size, stdin) == -1)
+		input = read_input();
+		if (input == NULL)
 		{
 			break;
 		}
@@ -75,20 +100,18 @@ int main(int argc, char **argv, char **env)
 		tokens = tokenize_input(input);
 		if (strcmp(tokens[0], "exit") == 0)
 		{
-			free_tokens(tokens);
-			exit(EXIT_SUCCESS);
+			handle_exit(tokens);
+			break;
 		}
 
-		if (tokens[0] == NULL)
+		if (tokens[0] != NULL)
 		{
-			free_tokens(tokens);
-			continue;
+			execute_command(tokens, env);
 		}
 
-		execute_command(tokens, env);
 		free_tokens(tokens);
+		free(input);
 	}
-	free(input);
 
 	return (0);
 }
