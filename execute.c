@@ -71,7 +71,7 @@ void execute_command(char **tokens, char **env)
 		{
 			while (*env != NULL)
 			{
-				printf("%s", *env);
+				printf("%s\n", *env);
 				env++;
 			}
 			free_tokens(tokens);
