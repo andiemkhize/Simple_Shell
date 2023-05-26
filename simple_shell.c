@@ -69,7 +69,6 @@ int main(int argc, char **argv, char **env)
 
 		if (getline(&input, &input_size, stdin) == -1)
 		{
-			printf("\n");
 			break;
 		}
 
