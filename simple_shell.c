@@ -73,16 +73,16 @@ int main(int argc, char **argv, char **env)
 		}
 
 		tokens = tokenize_input(input);
+		if (strcmp(tokens[0], "exit") == 0)
+		{
+			free_tokens(tokens);
+			exit(EXIT_SUCCESS);
+		}
+
 		if (tokens[0] == NULL)
 		{
 			free_tokens(tokens);
 			continue;
-		}
-
-		if (strcmp(tokens[0], "exit") == 0)
-		{
-			free(input);
-			exit(EXIT_SUCCESS);
 		}
 
 		execute_command(tokens, env);
