@@ -23,6 +23,7 @@ char *read_input(void)
 
 	if (getline(&input, &input_size, stdin) == -1)
 	{
+		fflush(stdin);
 		free(input);
 		return (NULL);
 	}
@@ -94,10 +95,17 @@ int main(int argc, char **argv, char **env)
 		input = read_input();
 		if (input == NULL)
 		{
+			free(input);
 			break;
 		}
 
 		tokens = tokenize_input(input);
+		if (tokens == NULL)
+		{
+			free(tokens);
+			continue;
+		}
+
 		if (strcmp(tokens[0], "exit") == 0)
 		{
 			handle_exit(tokens);

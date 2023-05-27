@@ -18,5 +18,6 @@ void execute_command(char **tokens, char **env);
 void print_prompt(void);
 char *read_input(void);
 void handle_exit(char **tokens);
+void remove_comments(char *input);
 
 #endif

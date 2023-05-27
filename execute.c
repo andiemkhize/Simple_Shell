@@ -28,6 +28,8 @@ void find_command_execute(char **tokens, char **env)
 
 		execve(command, tokens, env);
 		perror("execve() failed");
+		free(command);
+		free(tokens);
 		exit(EXIT_FAILURE);
 	}
 	else
@@ -43,6 +45,8 @@ void find_command_execute(char **tokens, char **env)
 				free(path_cpy);
 				execve(absolute_path, tokens, env);
 				perror("execve() failed");
+				free(absolute_path);
+				free(tokens);
 				exit(EXIT_FAILURE);
 			}
 			path_token = strtok(NULL, TOKEN_DELIM);
@@ -99,5 +103,19 @@ void handle_exit(char **tokens)
 	{
 		free_tokens(tokens);
 		exit(EXIT_SUCCESS);
+	}
+}
+
+/**
+ * remove_comments - Function removes comments
+ * @input: Input recieved from user
+ */
+void remove_comments(char *input)
+{
+	char *hashtag_pos = strchr(input, '#');
+
+	if (hashtag_pos != NULL)
+	{
+		*hashtag_pos = '\0';
 	}
 }
