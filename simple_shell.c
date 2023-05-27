@@ -37,21 +37,25 @@ char *read_input(void)
  */
 char **tokenize_input(char *input)
 {
-	int i = 0;
-	char **tokens = malloc(MAX_TOKENS * sizeof(char *));
-	char *token = strtok(input, TOKEN_DELIM);
+    int i = 0;
+    char **tokens = malloc(MAX_TOKENS * sizeof(char *));
+    char *token;
 
-	while (token != NULL)
-	{
-		if (token[0] != '#')
-		{
-			tokens[i] = strdup(token);
-			i++;
-		}
-		token = strtok(NULL, TOKEN_DELIM);
-	}
-	tokens[i] = NULL;
-	return (tokens);
+    token = strtok(input, TOKEN_DELIM);
+
+    while (token != NULL)
+    {
+        if (token[0] == '#')
+            break;
+
+        tokens[i] = strdup(token);
+        i++;
+        token = strtok(NULL, TOKEN_DELIM);
+    }
+
+    tokens[i] = NULL;
+
+    return tokens;
 }
 
 /**
@@ -112,7 +116,6 @@ int main(int argc, char **argv, char **env)
 		if (strcmp(tokens[0], "exit") == 0)
 		{
 			handle_exit(tokens);
-			free_tokens(tokens);
 			break;
 		}
 

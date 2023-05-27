@@ -105,17 +105,3 @@ void handle_exit(char **tokens)
 		exit(EXIT_SUCCESS);
 	}
 }
-
-/**
- * remove_comments - Function removes comments
- * @input: Input recieved from user
- */
-void remove_comments(char *input)
-{
-	char *hashtag_pos = strchr(input, '#');
-
-	if (hashtag_pos != NULL)
-	{
-		*hashtag_pos = '\0';
-	}
-}
