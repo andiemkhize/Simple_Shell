@@ -43,8 +43,11 @@ char **tokenize_input(char *input)
 
 	while (token != NULL)
 	{
-		tokens[i] = strdup(token);
-		i++;
+		if (token[0] != '#')
+		{
+			tokens[i] = strdup(token);
+			i++;
+		}
 		token = strtok(NULL, TOKEN_DELIM);
 	}
 	tokens[i] = NULL;
@@ -109,6 +112,7 @@ int main(int argc, char **argv, char **env)
 		if (strcmp(tokens[0], "exit") == 0)
 		{
 			handle_exit(tokens);
+			free_tokens(tokens);
 			break;
 		}
 
